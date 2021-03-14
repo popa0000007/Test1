@@ -1,0 +1,25 @@
+//
+// Created by Lenovo on 03.12.2020.
+//
+
+#ifndef ASSOCLIST_FUNCSTESTS_H
+#define ASSOCLIST_FUNCSTESTS_H
+typedef struct node {
+    int val;
+    node *next;
+    node *prev;
+} node;
+
+void n_rput(node *L_n, int x);
+
+void n_lput(node *R_n, int x);
+
+node *n_find(node *start, int x);
+
+void n_del(node *start, int x);
+
+int n_count(node start);
+
+void n_print(node start);
+
+#endif //ASSOCLIST_FUNCSTESTS_H

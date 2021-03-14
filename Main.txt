@@ -1,0 +1,72 @@
+#include <iostream>
+#include "funcstests.h"
+#include <wincon.h>
+
+
+using namespace std;
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    cout << "Ваш список пуст, вы хотите добавить начальную ноду со значением 0?\n" << "1 - да\nдругой ответ - выход\n";
+    int ans, par1, par2;
+    cin >> ans;
+    if (ans != 1) return 0;
+    node start_node{0, 0, 0};
+    node *cur = &start_node;
+    do {
+        cout << "Список состоит из " <<n_count(*cur)<< " нод(ы)\n";
+        cout << "Доступные команды для связанного списка:\n"
+                "1) Добавить ноду справа от ноды с выбранным значением\n"
+                "2) Добавить ноду слева от ноды с выбранным значением\n"
+                "3) Удалить  ноду по значению\n"
+                "4) Последовательно вывести весь список\n"
+                "-1)Для завершения\n";
+        cin >> ans;
+        switch (ans) {
+            case 1:
+                cout << "Укажите текущее значение ноды: ";
+                cin >> par1;
+                if(n_find(cur, par1) == 0) {
+                    cout << "Нода не найдена\n";
+                    break;
+                }
+                cout << "Введите значение новой ноды: ";
+                cin >> par2;
+                n_rput(n_find(cur, par1), par2);
+                break;
+            case 2:
+                cout << "Укажите текущее значение ноды: ";
+                cin >> par1;
+                if(n_find(cur, par1) == 0){
+                    cout<<"Нода не найдена\n";
+                    break;
+                }
+                cout << "Введите значение новой ноды: ";
+                cin >> par2;
+                n_lput(n_find(cur, par1), par2);
+                if (par1 == cur->val)
+                    cur = cur->prev;
+                break;
+            case 3:
+                cout << "Укажите текущее значение ноды: ";
+                cin >> par1;
+                node tmp;
+                tmp = *cur;
+                n_del(cur, par1);
+                if(par1 == tmp.val) {
+                    cur = tmp.next;
+                }
+                break;
+            case 4:
+                n_print(*cur);
+                break;
+            default:
+                std::cout<<"Нет такой команды!";
+                return 0;
+        }
+    } while (ans != -1);
+    return 0;
+}
+
+Изменение

@@ -1,0 +1,72 @@
+//
+// Created by Lenovo on 03.12.2020.
+//
+
+#include "funcstests.h"
+#include <stdlib.h>
+#include <iostream>
+
+
+void n_rput(node *L_n, int x) {
+    node *new_p;
+    new_p = (node *) malloc(sizeof(node));
+    new_p->val = x;
+    new_p->prev = L_n;
+    new_p->next = L_n->next;
+    if (L_n->next != 0)
+        L_n->next->prev = new_p;
+    L_n->next = new_p;
+}
+
+void n_lput(node *R_n, int x) {
+    node *new_p;
+    new_p = (node *) malloc(sizeof(node));
+    new_p->val = x;
+    new_p->prev = R_n->prev;
+    new_p->next = R_n;
+    if (R_n->prev != 0)
+        R_n->prev->next = new_p;
+    R_n->prev = new_p;
+}
+
+node *n_find(node *start, int x) {
+    if (start->val == x)
+        return start;
+    while (start->next != 0) {
+        start = start->next;
+        if (start->val == x)
+            return start;
+    }
+    return 0;
+}
+
+void n_del(node *start, int x) {
+    node *old_p = n_find(start, x);
+    if (old_p == 0) {
+        std::cout << "Не найдено подходящей ноды!\n";
+        return;
+    }
+    if (old_p->prev != 0) old_p->prev->next = old_p->next;
+    if (old_p->next != 0) old_p->next->prev = old_p->prev;
+    free(old_p);
+}
+
+int n_count(node start) {
+    int t = 1;
+    node cur = start;
+    while (cur.next) {
+        t++;
+        cur = *cur.next;
+    }
+    return t;
+}
+
+void n_print(node start) {
+    node cur = start;
+    std::cout << cur.val << ' ';
+    while (cur.next != 0) {
+        cur = *cur.next;
+        std::cout << cur.val << ' ';
+    }
+    std::cout << '\n';
+}
